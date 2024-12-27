@@ -123,9 +123,16 @@ def game_loop():
         pygame.display.update()
 
         if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, width - snake_block) / snake_block) * snake_block
-            foody = round(random.randrange(0, height - snake_block) / snake_block) * snake_block
-            len_of_snake += 1
+            if len(snake_list) == (width // snake_block) * (height // snake_block):
+                print("Вы победили!")
+                game_over = True
+            else:
+                while True:
+                    foodx = round(random.randrange(0, width - snake_block) / snake_block) * snake_block
+                    foody = round(random.randrange(0, height - snake_block) / snake_block) * snake_block
+                    if [foodx, foody] not in snake_list:
+                        break
+                len_of_snake += 1
 
         clock.tick(snake_speed)
 
