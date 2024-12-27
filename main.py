@@ -56,13 +56,16 @@ def game_loop():
 
     clock = pygame.time.Clock()
 
-    apples_eaten = 0  # Счетчик съеденных яблок
+    apples_eaten = 0
 
     while not game_over:
         while game_close:
             window.fill(BLUE)
             font = pygame.font.SysFont(None, 50)
-            text = font.render("Игра окончена! Q - выход, C - повтор", True, WHITE)
+            if apples_eaten >= 10:
+                text = font.render("Вы выиграли! Q - выход, C - повтор", True, WHITE)
+            else:
+                text = font.render("Вы проиграли! Q - выход, C - повтор", True, WHITE)
             window.blit(text, [width/6, height/3])
             pygame.display.update()
 
@@ -125,10 +128,9 @@ def game_loop():
         pygame.display.update()
 
         if x1 == foodx and y1 == foody:
-            apples_eaten += 1  
+            apples_eaten += 1
             if apples_eaten >= 10:
-                print("Вы съели 10 яблок! Игра окончена.")
-                game_over = True
+                game_close = True
             else:
                 while True:
                     foodx = round(random.randrange(0, width - snake_block) / snake_block) * snake_block
