@@ -56,6 +56,8 @@ def game_loop():
 
     clock = pygame.time.Clock()
 
+    apples_eaten = 0  # Счетчик съеденных яблок
+
     while not game_over:
         while game_close:
             window.fill(BLUE)
@@ -123,8 +125,9 @@ def game_loop():
         pygame.display.update()
 
         if x1 == foodx and y1 == foody:
-            if len(snake_list) == (width // snake_block) * (height // snake_block):
-                print("Вы победили!")
+            apples_eaten += 1  
+            if apples_eaten >= 10:
+                print("Вы съели 10 яблок! Игра окончена.")
                 game_over = True
             else:
                 while True:
